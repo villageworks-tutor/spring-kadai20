@@ -35,6 +35,10 @@ public class ContactController {
 		if (langList.length == 0) {
 			errors.add("言語は必須です");
 		}
+		// 実施予定日
+		if (dueDate != null && dueDate.isBefore(LocalDate.now())) {
+			errors.add("実施予定日は翌日以降を選択してください");
+		}
 		// 名前の必須入力チェック
 		if (name.isEmpty()) {
 			errors.add("名前は必須です");
