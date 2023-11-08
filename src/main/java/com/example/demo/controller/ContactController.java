@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,11 @@ public class ContactController {
 	
 	@PostMapping("/contact")
 	public String contact(
+			@RequestParam(name = "genre", defaultValue = "") Integer genre,
+			@RequestParam(name = "lang",  defaultValue = "") String[] langList,
+			@RequestParam(name = "detail",defaultValue = "") String detail,
+			@RequestParam(name = "dueDate",defaultValue = "") 
+			@DateTimeFormat(pattern = "yyyy-Mm-dd") LocalDate dueDate,
 			@RequestParam(name = "name",  defaultValue = "") String name,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			Model model) {
@@ -44,6 +51,10 @@ public class ContactController {
 			return "contactForm";
 		}
 		// リクエストパラメータをスコープに登録
+		model.addAttribute("genre", genre);
+		model.addAttribute("langList", langList);
+		model.addAttribute("detail", detail);
+		model.addAttribute("dueDate", dueDate);
 		model.addAttribute("name", name);
 		model.addAttribute("email", email);
 		// 画面遷移：遷移先はお問い合わせ結果画面
