@@ -19,6 +19,18 @@ public class ContactController {
 			@RequestParam(name = "name",  defaultValue = "") String name,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			Model model) {
+		// リクエストパラメータのチェックとエラーメッセージの初期化
+		String  error = "";
+		if (name.isEmpty()) {
+			error = "名前は必須です";
+		}
+		// エラーの有無をチェック
+		if (!error.isEmpty()) {
+			// エラーがある場合：エラーメッセージをスコープに登録
+			model.addAttribute("error", error);
+			// 画面遷移：遷移先はお問い合わせフォーム画面
+			return "contactForm";
+		}
 		// リクエストパラメータをスコープに登録
 		model.addAttribute("name", name);
 		model.addAttribute("email", email);
